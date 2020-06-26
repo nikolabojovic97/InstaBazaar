@@ -12,6 +12,9 @@ using InstaBazaar.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using InstaBazaar.Data.Data;
+using InstaBazaar.Data.Data.Repository.IRepository;
+using InstaBazaar.Data.Data.Repository;
 
 namespace InstaBazaar
 {
@@ -30,9 +33,14 @@ namespace InstaBazaar
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()//options => options.SignIn.RequireConfirmedAccount = true
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<IdentityUser, IdentityRole>()//options => options.SignIn.RequireConfirmedAccount = true
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.AddControllersWithViews()
+                .AddNewtonsoftJson()
                 .AddRazorRuntimeCompilation();
             services.AddRazorPages();
         }
