@@ -1,36 +1,51 @@
-﻿@model IEnumerable<InstaBazaar.Models.Category>
-
+﻿@model InstaBazaar.Models.ViewModels.CategoryViewModel
 @{
-    ViewData["Title"] = "Kategorije";
+    ViewData["Title"] = Model.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Kategorija</h1>
+<h1>@Model.Title</h1>
 
-<p>
+<div class="row" style="margin-bottom:10px">
     <div class="col-6">
-        <a asp-action="Create" class="btn btn-dark bg-primary text-light"><i class="fas fa"></i> &nbsp; Nova kategorija</a>
+        <a asp-action="Create" class="btn btn-dark bg-primary text-light"><i class="fas fa-plus"></i> &nbsp; Nova kategorija</a>
     </div>
-</p>
+
+    <div class="col-6">
+        <form class="row">
+            <input class="form-control col-6" asp-action="Index" asp-for="Search" value="" name="search" placeholder="Pretraži kategorije" />
+            <input class="btn btn-success" style="margin: 0px 15px 0px 10px" type="submit" value="Traži" />
+        </form>
+    </div>
+</div>
+
+@if (!string.IsNullOrEmpty(Model.Search))
+{
+<div class="row">
+    <a asp-action="Index" asp-route-search="" class="nav-link bg-dark text-light rounded-pill" style="margin:auto; margin-bottom:10px">@Model.Search &nbsp;<i class="far fa-times-circle"></i></a>
+</div>
+}
+
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                Id
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Naziv
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                Opis
             </th>
             <th class="row-cols-4"></th>
         </tr>
     </thead>
     <tbody>
-        @if (Model != null && Model.Count() > 0)
+        @if (Model.Categories != null && Model.PagingInfoViewModel.TotalItems > 0)
         {
-            foreach (var item in Model)
+            foreach (var item in Model.Categories)
             {
         <tr>
             <td>
@@ -57,6 +72,18 @@
             </td>
         </tr>
             }
+            <tr>
+                <td colspan="3" align="right">
+                    <ul class="pagination">
+                        @for (int i = 1; i <= Model.PagingInfoViewModel.TotalPages; i++)
+                        {
+                            <li class="page-item @(i == Model.PagingInfoViewModel.CurrentPage ? "active" : "")">
+                                <a asp-action="Index" asp-route-page="@i" class="page-link">@i</a>
+                            </li>
+                        }
+                    </ul>
+                </td>
+            </tr>
         }
         else
         {

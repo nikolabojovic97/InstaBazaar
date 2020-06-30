@@ -7,13 +7,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InstaBazaar.Data.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
 
+        public DbSet<Brand> Brands { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<InstagramAccount> InstagramAccounts { get; set; }
     }
 }

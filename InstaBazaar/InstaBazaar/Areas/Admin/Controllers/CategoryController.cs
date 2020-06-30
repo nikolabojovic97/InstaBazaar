@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using InstaBazaar.Data.Data.Repository.IRepository;
 using InstaBazaar.Models;
+using InstaBazaar.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +16,7 @@ namespace InstaBazaar.Areas.Admin.Controllers
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork unitOfWork;
+        private const int PageSize = 10;
 
         public CategoryController(IUnitOfWork unitOfWork)
         {
@@ -21,10 +24,24 @@ namespace InstaBazaar.Areas.Admin.Controllers
         }
 
         // GET: CategoryController
-        public ActionResult Index()
+        public ActionResult Index(int page = 1, string search = null)
         {
+            CategoryViewModel cvm = new CategoryViewModel();
+
             var categories = unitOfWork.Category.GetAll();
-            return View(categories);
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                cvm.Search = search;
+                categories = unitOfWork.Category.Search(search);
+            }
+
+            cvm.Title = "Kategorije";
+            cvm.SubTitle = "Spisak svih registrovanih kategorija";
+            cvm.Categories = categories.Skip((page - 1) * PageSize).Take(PageSize).ToList();
+            cvm.PagingInfoViewModel = new PagingInfoViewModel { CurrentPage = page, ItemsPerPage = PageSize, TotalItems = categories.Count() };
+
+            return View(cvm);
         }
 
         // GET: CategoryController/Details/5

@@ -7,7 +7,7 @@ namespace InstaBazaar.Models
 {
     public class Category
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [Required]
         [MaxLength(50)]
@@ -19,5 +19,7 @@ namespace InstaBazaar.Models
         public string Description { get; set; }
 
         //public string ImageUrl { get; set; }
+
+        public List<InstagramAccount> InstagramAccounts { get; set; }
     }
 }

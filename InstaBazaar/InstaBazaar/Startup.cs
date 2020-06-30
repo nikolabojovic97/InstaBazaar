@@ -15,6 +15,9 @@ using Microsoft.Extensions.Hosting;
 using InstaBazaar.Data.Data;
 using InstaBazaar.Data.Data.Repository.IRepository;
 using InstaBazaar.Data.Data.Repository;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using InstaBazaar.Models;
+using InstaBazaar.Utility;
 
 namespace InstaBazaar
 {
@@ -33,11 +36,22 @@ namespace InstaBazaar
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddIdentity<IdentityUser, IdentityRole>()//options => options.SignIn.RequireConfirmedAccount = true
+            services.AddIdentity<User, IdentityRole>(
+                options =>
+                {
+                    options.SignIn.RequireConfirmedAccount = false;
+                    options.SignIn.RequireConfirmedEmail = false;
+                })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+
+            services.AddScoped<IBrandRepository, BrandRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IInstagramAccountRepository, InstagramAccountRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddSingleton<IEmailSender, EmailSender>();
 
             services.AddControllersWithViews()
                 .AddNewtonsoftJson()

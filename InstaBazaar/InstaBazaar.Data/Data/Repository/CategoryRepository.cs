@@ -11,7 +11,7 @@ namespace InstaBazaar.Data.Data.Repository
 {
     public class CategoryRepository : Repository<Category>, ICategoryRepository
     {
-        private readonly ApplicationDbContext context;
+        private new readonly ApplicationDbContext context;
 
         public CategoryRepository(ApplicationDbContext context) : base(context)
         {
@@ -25,6 +25,12 @@ namespace InstaBazaar.Data.Data.Repository
                 Text = x.Name,
                 Value = x.Id.ToString()
             });
+        }
+
+        public IEnumerable<Category> Search(string search)
+        {
+            search = search.ToLower();
+            return context.Categories.Where(x => x.Name.ToLower().Contains(search) || x.Description.ToLower().Contains(search));
         }
 
         public void Update(Category category)

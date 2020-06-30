@@ -9,6 +9,7 @@ namespace InstaBazaar.Data.Data.Repository.IRepository
     public interface ICategoryRepository : IRepository<Category>
     {
         IEnumerable<SelectListItem> GetCategoryListForDropDown();
+        IEnumerable<Category> Search(string search);
         void Update(Category category);
     }
 }
