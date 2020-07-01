@@ -1,4 +1,4 @@
-﻿@model InstaBazaar.Models.ViewModels.CategoryViewModel
+﻿@model InstaBazaar.Models.ViewModels.ViewModel<Category>
 @{
     ViewData["Title"] = Model.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -39,13 +39,13 @@
             <th>
                 Opis
             </th>
-            <th class="row-cols-4"></th>
+            <th class="row-cols-3"></th>
         </tr>
     </thead>
     <tbody>
-        @if (Model.Categories != null && Model.PagingInfoViewModel.TotalItems > 0)
+        @if (Model.List != null && Model.PagingInfoViewModel.TotalItems > 0)
         {
-            foreach (var item in Model.Categories)
+            foreach (var item in Model.List)
             {
         <tr>
             <td>

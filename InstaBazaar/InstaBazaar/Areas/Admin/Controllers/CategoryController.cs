@@ -26,22 +26,24 @@ namespace InstaBazaar.Areas.Admin.Controllers
         // GET: CategoryController
         public ActionResult Index(int page = 1, string search = null)
         {
-            CategoryViewModel cvm = new CategoryViewModel();
+            ViewModel<Category> vm = new ViewModel<Category>();
 
-            var categories = unitOfWork.Category.GetAll();
+            IEnumerable<Category> categories;
 
             if (!string.IsNullOrEmpty(search))
             {
-                cvm.Search = search;
+                vm.Search = search;
                 categories = unitOfWork.Category.Search(search);
             }
+            else
+                categories = unitOfWork.Category.GetAll();
 
-            cvm.Title = "Kategorije";
-            cvm.SubTitle = "Spisak svih registrovanih kategorija";
-            cvm.Categories = categories.Skip((page - 1) * PageSize).Take(PageSize).ToList();
-            cvm.PagingInfoViewModel = new PagingInfoViewModel { CurrentPage = page, ItemsPerPage = PageSize, TotalItems = categories.Count() };
+            vm.Title = "Kategorije";
+            vm.SubTitle = "Sve registrovane kategorije";
+            vm.List = categories.Skip((page - 1) * PageSize).Take(PageSize).ToList();
+            vm.PagingInfoViewModel = new PagingInfoViewModel { CurrentPage = page, ItemsPerPage = PageSize, TotalItems = categories.Count() };
 
-            return View(cvm);
+            return View(vm);
         }
 
         // GET: CategoryController/Details/5

@@ -15,10 +15,36 @@ namespace InstaBazaar.Data.Data.Repository
         {
             this.context = context;
         }
+
+        public IEnumerable<InstagramAccount> GetByCategory(Category category)
+        {
+            var accounts = context.InstagramAccounts;
+            return GetByCategory(accounts, category);
+        }
+
+        public IEnumerable<InstagramAccount> GetByCategory(IEnumerable<InstagramAccount> accounts, Category category)
+        {
+            foreach (var account in accounts)
+                if (account.CategoryId == category.Id)
+                    yield return account;
+        }
+
+        public IEnumerable<InstagramAccount> GetByCategories(IEnumerable<InstagramAccount> accounts, IEnumerable<Category> categories)
+        {
+            foreach (var category in categories)
+                yield return (InstagramAccount)GetByCategory(accounts, category);
+        }
+
         public IEnumerable<InstagramAccount> Search(string search)
         {
+            var accounts = context.InstagramAccounts;
+            return Search(accounts, search);
+        }
+
+        public IEnumerable<InstagramAccount> Search(IEnumerable<InstagramAccount> accounts, string search)
+        {
             search = search.ToLower();
-            return context.InstagramAccounts.Where(x => x.IgUserName.Contains(search) || x.Description.Contains(search));
+            return accounts.Where(x => x.IgUserName.Contains(search) || x.Description.Contains(search));
         }
 
         public void Update(InstagramAccount account)

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InstaBazaar.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200629231925_First")]
+    [Migration("20200630215144_First")]
     partial class First
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,9 +23,9 @@ namespace InstaBazaar.Data.Migrations
 
             modelBuilder.Entity("InstaBazaar.Models.Brand", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
@@ -46,9 +46,9 @@ namespace InstaBazaar.Data.Migrations
 
             modelBuilder.Entity("InstaBazaar.Models.Category", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
@@ -67,9 +67,9 @@ namespace InstaBazaar.Data.Migrations
 
             modelBuilder.Entity("InstaBazaar.Models.InstagramAccount", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<double>("AvgComments")
@@ -81,11 +81,17 @@ namespace InstaBazaar.Data.Migrations
                     b.Property<long>("CategoryId")
                         .HasColumnType("bigint");
 
+                    b.Property<int?>("CategoryId1")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("IgId")
                         .HasColumnType("int");
+
+                    b.Property<string>("IgUserName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("MemberSince")
                         .HasColumnType("datetime2");
@@ -101,7 +107,7 @@ namespace InstaBazaar.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("CategoryId1");
 
                     b.HasIndex("UserId");
 
@@ -160,9 +166,6 @@ namespace InstaBazaar.Data.Migrations
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
-                    b.Property<int>("UserType")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -201,6 +204,29 @@ namespace InstaBazaar.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "569ff0e3-9846-4ce8-aba8-a26e7ca18b41",
+                            ConcurrencyStamp = "19b39ce5-52d4-4456-8484-3291de70253a",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "ca314fd7-0ad9-4cf7-b020-586268ece234",
+                            ConcurrencyStamp = "a1881e5a-329b-4848-aa9c-0189c77b15cb",
+                            Name = "Brand",
+                            NormalizedName = "BRAND"
+                        },
+                        new
+                        {
+                            Id = "b2ab2dd0-452c-4f55-9f15-55b4170a6571",
+                            ConcurrencyStamp = "9d74c4ac-8f5f-4c1c-8aaf-009433ab7032",
+                            Name = "Influencer",
+                            NormalizedName = "INFLUENCER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -309,7 +335,7 @@ namespace InstaBazaar.Data.Migrations
 
             modelBuilder.Entity("InstaBazaar.Models.Brand", b =>
                 {
-                    b.HasOne("InstaBazaar.Models.User", null)
+                    b.HasOne("InstaBazaar.Models.User", "User")
                         .WithMany("Brands")
                         .HasForeignKey("UserId");
                 });
@@ -318,9 +344,7 @@ namespace InstaBazaar.Data.Migrations
                 {
                     b.HasOne("InstaBazaar.Models.Category", "Category")
                         .WithMany("InstagramAccounts")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId1");
 
                     b.HasOne("InstaBazaar.Models.User", "User")
                         .WithMany("InstagramAccounts")

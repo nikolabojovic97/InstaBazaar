@@ -1,0 +1,96 @@
+﻿@model InstaBazaar.Models.ViewModels.ViewModel<InstagramAccount>
+
+@{
+    ViewData["Title"] = Model.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@Model.Title</h1>
+
+<div class="row" style="margin-bottom:10px">
+    <div class="col-6">
+
+    </div>
+    <div class="col-6">
+        <form class="row">
+            <input class="form-control col-6" asp-action="Index" asp-for="Search" value="" name="search" placeholder="Pretraži brendove" />
+            <input class="btn btn-success" style="margin: 0px 15px 0px 10px" type="submit" value="Traži" />
+        </form>
+    </div>
+</div>
+
+@if (!string.IsNullOrEmpty(Model.Search))
+{
+    <div class="row">
+        <a asp-action="Index" asp-route-search="" class="nav-link bg-dark text-light rounded-pill" style="margin:auto; margin-bottom:10px">@Model.Search &nbsp;<i class="far fa-times-circle"></i></a>
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Profil
+            </th>
+            <th>
+                Pratioci
+            </th>
+            <th>
+                Prosečno komentara
+            </th>
+            <th>
+                Prosečno lajkova
+            </th>
+            <th class="row-cols-2"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.List != null && Model.List.Count > 0)
+        {
+            foreach (var item in Model.List)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IgUserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalFollowers)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AvgComments)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AvgLikes)
+                    </td>
+                    <td align="right">
+                        <div class="row-cols-2">
+                            <a asp-action="Details" asp-route-Id="@item.Id" class="btn bg-primary text-light">Detalji</a>
+                            <a asp-action="Delete" asp-route-Id="@item.Id" class="btn bg-danger text-light">Izbriši</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td colspan="3" align="right">
+                    <ul class="pagination">
+                        @for (int i = 1; i <= Model.PagingInfoViewModel.TotalPages; i++)
+                        {
+                            <li class="page-item @(i == Model.PagingInfoViewModel.CurrentPage ? "active" : "")">
+                                <a asp-action="Index" asp-route-page="@i" class="page-link">@i</a>
+                            </li>
+                        }
+                    </ul>
+                </td>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <td colspan="4">
+                    <h4 class="text-center">Nema Instagram profila</h4>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>

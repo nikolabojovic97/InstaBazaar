@@ -7,7 +7,7 @@ namespace InstaBazaar.Models
 {
     public class Category
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [MaxLength(50)]

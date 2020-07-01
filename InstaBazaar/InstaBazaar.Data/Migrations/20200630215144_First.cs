@@ -39,8 +39,7 @@ namespace InstaBazaar.Data.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    UserType = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -51,7 +50,7 @@ namespace InstaBazaar.Data.Migrations
                 name: "Categories",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
                     Description = table.Column<string>(nullable: false)
@@ -171,7 +170,7 @@ namespace InstaBazaar.Data.Migrations
                 name: "Brands",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
@@ -192,27 +191,29 @@ namespace InstaBazaar.Data.Migrations
                 name: "InstagramAccounts",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(nullable: true),
+                    IgUserName = table.Column<string>(nullable: true),
                     IgId = table.Column<int>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
                     MemberSince = table.Column<DateTime>(nullable: false),
                     TotalFollowers = table.Column<int>(nullable: false),
                     TotalPosts = table.Column<int>(nullable: false),
                     AvgComments = table.Column<double>(nullable: false),
                     AvgLikes = table.Column<double>(nullable: false),
                     UserId = table.Column<string>(nullable: true),
-                    CategoryId = table.Column<long>(nullable: false)
+                    CategoryId = table.Column<long>(nullable: false),
+                    CategoryId1 = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_InstagramAccounts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_InstagramAccounts_Categories_CategoryId",
-                        column: x => x.CategoryId,
+                        name: "FK_InstagramAccounts_Categories_CategoryId1",
+                        column: x => x.CategoryId1,
                         principalTable: "Categories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_InstagramAccounts_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -220,6 +221,21 @@ namespace InstaBazaar.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "569ff0e3-9846-4ce8-aba8-a26e7ca18b41", "19b39ce5-52d4-4456-8484-3291de70253a", "Admin", "ADMIN" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "ca314fd7-0ad9-4cf7-b020-586268ece234", "a1881e5a-329b-4848-aa9c-0189c77b15cb", "Brand", "BRAND" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "b2ab2dd0-452c-4f55-9f15-55b4170a6571", "9d74c4ac-8f5f-4c1c-8aaf-009433ab7032", "Influencer", "INFLUENCER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -266,9 +282,9 @@ namespace InstaBazaar.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_InstagramAccounts_CategoryId",
+                name: "IX_InstagramAccounts_CategoryId1",
                 table: "InstagramAccounts",
-                column: "CategoryId");
+                column: "CategoryId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InstagramAccounts_UserId",

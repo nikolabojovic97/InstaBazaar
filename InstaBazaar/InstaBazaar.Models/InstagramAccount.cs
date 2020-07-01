@@ -6,7 +6,7 @@ namespace InstaBazaar.Models
 {
     public class InstagramAccount
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
         public string IgUserName { get; set; }
         public int IgId { get; set; }
         public string Description { get; set; }
