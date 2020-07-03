@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -18,7 +19,9 @@ namespace InstaBazaar.Models
         [Display(Name = "Opis")]
         public string Description { get; set; }
 
-        //public string ImageUrl { get; set; }
+        [DataType(DataType.ImageUrl)]
+        [Display(Name = "Slika")]
+        public string ImageUrl { get; set; }
 
         public List<InstagramAccount> InstagramAccounts { get; set; }
     }

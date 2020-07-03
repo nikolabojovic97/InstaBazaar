@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using InstaBazaar.Data.Data.Repository.IRepository;
 using InstaBazaar.Models;
 using InstaBazaar.Models.ViewModels;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Hosting;
 
 namespace InstaBazaar.Areas.Admin.Controllers
 {
@@ -16,11 +21,13 @@ namespace InstaBazaar.Areas.Admin.Controllers
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly IWebHostEnvironment hostEnvironment;
         private const int PageSize = 10;
 
-        public CategoryController(IUnitOfWork unitOfWork)
+        public CategoryController(IUnitOfWork unitOfWork, IWebHostEnvironment hostEnvironment)
         {
             this.unitOfWork = unitOfWork;
+            this.hostEnvironment = hostEnvironment;
         }
 
         // GET: CategoryController
@@ -65,12 +72,23 @@ namespace InstaBazaar.Areas.Admin.Controllers
         // POST: CategoryController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(include: "Name, Description")] Category category)
+        public ActionResult Create([Bind(include: "Name, Description")]Category category)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    string webRootPath = hostEnvironment.WebRootPath;
+                    var file = HttpContext.Request.Form.Files.First();
+                    string fileName = Guid.NewGuid().ToString();
+                    var uploadPath = Path.Combine(webRootPath, @"images\categories");
+                    var extension = Path.GetExtension(file.FileName);
+
+                    var fileStream = new FileStream(Path.Combine(uploadPath, fileName + extension), FileMode.Create);
+                    file.CopyToAsync(fileStream);
+
+                    category.ImageUrl = @"\images\categories\" + fileName + extension;
+
                     unitOfWork.Category.Add(category);
                     unitOfWork.Save();
                     return RedirectToAction(nameof(Index));
@@ -97,14 +115,20 @@ namespace InstaBazaar.Areas.Admin.Controllers
         // POST: CategoryController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, [Bind(include: "Id, Name, Description")] Category category)
+        public async Task<ActionResult> EditAsync(int id, [Bind(include: "Id, Name, Description")] Category category)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    if (unitOfWork.Category.Get(id) == null)
+                    var categoryDb = unitOfWork.Category.Get(id);
+                    if (categoryDb == null)
                         return new NotFoundResult();
+
+                    var files = HttpContext.Request.Form.Files;
+                    if (files.Count > 0)
+                        category.ImageUrl = await unitOfWork.Category.SaveImageAsync(files.First(), categoryDb.ImageUrl);
+                   
 
                     unitOfWork.Category.Update(category);
                     unitOfWork.Save();

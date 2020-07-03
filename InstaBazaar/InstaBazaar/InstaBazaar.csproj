@@ -21,4 +21,8 @@
     <ProjectReference Include="..\InstaBazaar.Data\InstaBazaar.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\categories\" />
+  </ItemGroup>
+
 </Project>

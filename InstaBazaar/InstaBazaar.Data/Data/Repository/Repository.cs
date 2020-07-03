@@ -61,13 +61,13 @@ namespace InstaBazaar.Data.Data.Repository
             return query.FirstOrDefault();
         }
 
-        public void Remove(int id)
+        public virtual void Remove(int id)
         {
             T entity = dbSet.Find(id);
             Remove(entity);
         }
 
-        public void Remove(T entity)
+        public virtual void Remove(T entity)
         {
             dbSet.Remove(entity);
         }
