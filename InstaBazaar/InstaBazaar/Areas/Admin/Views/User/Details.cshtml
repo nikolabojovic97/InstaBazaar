@@ -1,0 +1,42 @@
+﻿@model InstaBazaar.Models.User
+@{
+    ViewData["Title"] = "Detalji";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Detalji</h1>
+
+<div>
+    <h4>Korisnik</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Korisničko ime
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+        <dt class="col-sm-2">
+            Email
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+    </dl>
+</div>
+@if(Model.InstagramAccounts != null && Model.InstagramAccounts.Count > 0)
+{
+    <div class="row" style="margin:auto">
+        @foreach(var item in Model.InstagramAccounts)
+        {
+            <a class="btn bg-primary text-light" asp-controller="InstagramAccount" asp-action="Details" asp-route-id="@item.Id">@("@")@item.IgUserName</a>
+        }
+    </div>
+}
+
+<br />
+
+<div>
+    <a asp-action="Index">Nazad na sve korisnike</a>
+</div>
+

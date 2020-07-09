@@ -1,0 +1,62 @@
+﻿@model InstaBazaar.Models.InstagramAccount
+
+@{
+    ViewData["Title"] = "Detalji";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Detalji</h1>
+
+<div>
+    <h4>@("@")@Html.DisplayFor(model => model.IgUserName)</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MemberSince)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MemberSince)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalFollowers)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TotalFollowers)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalPosts)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TotalPosts)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AvgComments)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AvgComments)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AvgLikes)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AvgLikes)
+        </dd>
+    </dl>
+</div>
+
+<div class="row" style="margin:auto">
+    <a class="btn bg-primary text-light" asp-controller="User" asp-action="Details" asp-route-id="@Model.UserId"><i class="far fa-user-circle"></i> &nbsp; @Model.User.UserName</a>
+</div>
+
+<br />
+
+<div>
+    <a asp-action="Index">Nazad na sve Instagram naloge</a>
+</div>
+

@@ -1,0 +1,97 @@
+﻿@model InstaBazaar.Models.ViewModels.ViewModel<Category>
+@{
+    ViewData["Title"] = Model.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@Model.Title</h1>
+
+<div class="row" style="margin-bottom:10px">
+    <div class="col-6">
+        <a asp-action="Create" class="btn btn-dark bg-primary text-light"><i class="fas fa-plus"></i> &nbsp; Nova kategorija</a>
+    </div>
+
+    <div class="col-6">
+        <form class="row">
+            <input class="form-control col-6" asp-action="Index" asp-for="Search" value="" name="search" placeholder="Pretraži kategorije" />
+            <input class="btn btn-success" style="margin: 0px 15px 0px 10px" type="submit" value="Traži" />
+        </form>
+    </div>
+</div>
+
+@if (!string.IsNullOrEmpty(Model.Search))
+{
+<div class="row">
+    <a asp-action="Index" asp-route-search="" class="badge badge-pill badge-info" style="font-size: 16px; margin:auto; margin-bottom:10px">@Model.Search &nbsp;<i class="far fa-times-circle"></i></a>
+</div>
+}
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+
+            </th>
+            <th>
+                Naziv
+            </th>
+            <th>
+                Opis
+            </th>
+            <th class="row-cols-3"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.List != null && Model.PagingInfoViewModel.TotalItems > 0)
+        {
+            foreach (var item in Model.List)
+            {
+        <tr>
+            <td>
+                <img src="@item.ImageUrl" width="30px"/>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td align="right">
+                <div class="row-cols-3">
+                    <a asp-action="Edit" asp-route-Id="@item.Id" class="btn bg-primary text-light">Izmeni</a>
+                    <a asp-action="Details" asp-route-Id="@item.Id" class="btn bg-primary text-light">Detalji</a>
+                    <a asp-action="Delete" asp-route-Id="@item.Id" class="btn bg-danger text-light">Izbriši</a>
+                </div>
+
+                @{
+                    /*@Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                    @Html.ActionLink("Details", "Details", new { id = item.Id })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })*/
+                }
+            </td>
+        </tr>
+            }
+            <tr>
+                <td colspan="3" align="right">
+                    <ul class="pagination">
+                        @for (int i = 1; i <= Model.PagingInfoViewModel.TotalPages; i++)
+                        {
+                            <li class="page-item @(i == Model.PagingInfoViewModel.CurrentPage ? "active" : "")">
+                                <a asp-action="Index" asp-route-page="@i" class="page-link">@i</a>
+                            </li>
+                        }
+                    </ul>
+                </td>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <td colspan="4">
+                    <h4 class="text-center">Nema kategorija</h4>     
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

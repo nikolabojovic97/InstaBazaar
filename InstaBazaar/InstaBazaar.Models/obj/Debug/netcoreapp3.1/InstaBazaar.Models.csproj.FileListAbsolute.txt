@@ -1,9 +1,0 @@
-C:\Users\nikol\Documents\GitHub\InstaBazaar\InstaBazaar\InstaBazaar.Models\bin\Debug\netcoreapp3.1\InstaBazaar.Models.deps.json
-C:\Users\nikol\Documents\GitHub\InstaBazaar\InstaBazaar\InstaBazaar.Models\bin\Debug\netcoreapp3.1\InstaBazaar.Models.dll
-C:\Users\nikol\Documents\GitHub\InstaBazaar\InstaBazaar\InstaBazaar.Models\bin\Debug\netcoreapp3.1\InstaBazaar.Models.pdb
-C:\Users\nikol\Documents\GitHub\InstaBazaar\InstaBazaar\InstaBazaar.Models\obj\Debug\netcoreapp3.1\InstaBazaar.Models.AssemblyInfoInputs.cache
-C:\Users\nikol\Documents\GitHub\InstaBazaar\InstaBazaar\InstaBazaar.Models\obj\Debug\netcoreapp3.1\InstaBazaar.Models.AssemblyInfo.cs
-C:\Users\nikol\Documents\GitHub\InstaBazaar\InstaBazaar\InstaBazaar.Models\obj\Debug\netcoreapp3.1\InstaBazaar.Models.csproj.CoreCompileInputs.cache
-C:\Users\nikol\Documents\GitHub\InstaBazaar\InstaBazaar\InstaBazaar.Models\obj\Debug\netcoreapp3.1\InstaBazaar.Models.dll
-C:\Users\nikol\Documents\GitHub\InstaBazaar\InstaBazaar\InstaBazaar.Models\obj\Debug\netcoreapp3.1\InstaBazaar.Models.pdb
-C:\Users\nikol\Documents\GitHub\InstaBazaar\InstaBazaar\InstaBazaar.Models\obj\Debug\netcoreapp3.1\InstaBazaar.Models.csprojAssemblyReference.cache
