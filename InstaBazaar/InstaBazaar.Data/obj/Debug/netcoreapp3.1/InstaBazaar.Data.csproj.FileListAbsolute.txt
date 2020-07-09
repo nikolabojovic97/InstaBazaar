@@ -1,0 +1,14 @@
+C:\Users\nikol\Documents\GitHub\InstaBazaar\InstaBazaar\InstaBazaar.Data\bin\Debug\netcoreapp3.1\InstaBazaar.Data.deps.json
+C:\Users\nikol\Documents\GitHub\InstaBazaar\InstaBazaar\InstaBazaar.Data\bin\Debug\netcoreapp3.1\InstaBazaar.Data.dll
+C:\Users\nikol\Documents\GitHub\InstaBazaar\InstaBazaar\InstaBazaar.Data\bin\Debug\netcoreapp3.1\InstaBazaar.Data.pdb
+C:\Users\nikol\Documents\GitHub\InstaBazaar\InstaBazaar\InstaBazaar.Data\bin\Debug\netcoreapp3.1\InstaBazaar.Models.dll
+C:\Users\nikol\Documents\GitHub\InstaBazaar\InstaBazaar\InstaBazaar.Data\bin\Debug\netcoreapp3.1\InstaBazaar.Utility.dll
+C:\Users\nikol\Documents\GitHub\InstaBazaar\InstaBazaar\InstaBazaar.Data\bin\Debug\netcoreapp3.1\InstaBazaar.Models.pdb
+C:\Users\nikol\Documents\GitHub\InstaBazaar\InstaBazaar\InstaBazaar.Data\bin\Debug\netcoreapp3.1\InstaBazaar.Utility.pdb
+C:\Users\nikol\Documents\GitHub\InstaBazaar\InstaBazaar\InstaBazaar.Data\obj\Debug\netcoreapp3.1\InstaBazaar.Data.csprojAssemblyReference.cache
+C:\Users\nikol\Documents\GitHub\InstaBazaar\InstaBazaar\InstaBazaar.Data\obj\Debug\netcoreapp3.1\InstaBazaar.Data.AssemblyInfoInputs.cache
+C:\Users\nikol\Documents\GitHub\InstaBazaar\InstaBazaar\InstaBazaar.Data\obj\Debug\netcoreapp3.1\InstaBazaar.Data.AssemblyInfo.cs
+C:\Users\nikol\Documents\GitHub\InstaBazaar\InstaBazaar\InstaBazaar.Data\obj\Debug\netcoreapp3.1\InstaBazaar.Data.csproj.CoreCompileInputs.cache
+C:\Users\nikol\Documents\GitHub\InstaBazaar\InstaBazaar\InstaBazaar.Data\obj\Debug\netcoreapp3.1\InstaBazaar.Data.csproj.CopyComplete
+C:\Users\nikol\Documents\GitHub\InstaBazaar\InstaBazaar\InstaBazaar.Data\obj\Debug\netcoreapp3.1\InstaBazaar.Data.dll
+C:\Users\nikol\Documents\GitHub\InstaBazaar\InstaBazaar\InstaBazaar.Data\obj\Debug\netcoreapp3.1\InstaBazaar.Data.pdb
