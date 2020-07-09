@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using InstaBazaar.Utility
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    var user = await UserManager.GetUserAsync(User);
+    if (await UserManager.IsInRoleAsync(user, UserRolesConf.Admin))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-light" asp-area="Admin" asp-controller="Home" asp-action="Index">Početna</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Upravljanje sadržajem
+            </a>
+            <div class="dropdown-menu dropdown-toggle bg-primary" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item text-light" asp-area="Admin" asp-controller="User" asp-action="Index">Korisnici</a>
+                <a class="dropdown-item text-light" asp-area="Admin" asp-controller="InstagramAccount" asp-action="Index">Instagram profili</a>
+                <a class="dropdown-item text-light" asp-area="Admin" asp-controller="Category" asp-action="Index">Kategorije</a>
+                <a class="dropdown-item text-light" asp-area="Admin" asp-controller="Statistics" asp-action="Index">Statistika</a>
+            </div>
+        </li>
+    }
+    else if (await UserManager.IsInRoleAsync(user, UserRolesConf.User))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-light" asp-area="User" asp-controller="Home" asp-action="Index">Početna</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-light" asp-area="User" asp-controller="InstagramAccount" asp-action="Index">Influenseri</a>
+        </li>
+    }
+
+}
+else
+{
+    <li class="nav-item">
+        <a class="nav-link text-light" asp-area="Guest" asp-controller="Home" asp-action="Index">Početna</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-light" asp-area="Guest" asp-controller="InstagramAccount" asp-action="Index">Influenseri</a>
+    </li>
+}

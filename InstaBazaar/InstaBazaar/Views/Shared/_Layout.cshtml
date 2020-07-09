@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -22,20 +23,22 @@
 
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
+                    <partial name="_NavbarPartial" />
+                    <!--<li class="nav-item">
                         <a class="nav-link text-light" asp-area="Guest" asp-controller="Home" asp-action="Index">Početna</a>
                     </li>
+
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Upravljanje sadržajem
-                        </a>
-                        <div class="dropdown-menu dropdown-toggle bg-primary" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item text-light" asp-area="Admin" asp-controller="User" asp-action="Index">Korisnici</a>
-                            <a class="dropdown-item text-light" asp-area="Admin" asp-controller="InstagramAccount" asp-action="Index">Influenseri</a>
-                            <a class="dropdown-item text-light" asp-area="Admin" asp-controller="Category" asp-action="Index">Kategorije</a>
-                            <a class="dropdown-item text-light" asp-area="Admin" asp-controller="Statistics" asp-action="Index">Statistika</a>
-                        </div>
-                    </li>
+        <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Upravljanje sadržajem
+        </a>
+        <div class="dropdown-menu dropdown-toggle bg-primary" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item text-light" asp-area="Admin" asp-controller="User" asp-action="Index">Korisnici</a>
+            <a class="dropdown-item text-light" asp-area="Admin" asp-controller="InstagramAccount" asp-action="Index">Influenseri</a>
+            <a class="dropdown-item text-light" asp-area="Admin" asp-controller="Category" asp-action="Index">Kategorije</a>
+            <a class="dropdown-item text-light" asp-area="Admin" asp-controller="Statistics" asp-action="Index">Statistika</a>
+        </div>
+    </li>--->
                 </ul>
                 <partial name="_LoginPartial" />
             </div>
