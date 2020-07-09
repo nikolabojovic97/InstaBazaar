@@ -22,7 +22,7 @@
 @if (!string.IsNullOrEmpty(Model.Search))
 {
 <div class="row">
-    <a asp-action="Index" asp-route-search="" class="nav-link bg-dark text-light rounded-pill" style="margin:auto; margin-bottom:10px">@Model.Search &nbsp;<i class="far fa-times-circle"></i></a>
+    <a asp-action="Index" asp-route-search="" class="badge badge-pill badge-info" style="font-size: 16px; margin:auto; margin-bottom:10px">@Model.Search &nbsp;<i class="far fa-times-circle"></i></a>
 </div>
 }
 

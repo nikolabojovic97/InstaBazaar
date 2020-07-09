@@ -2,12 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace InstaBazaar.Data.Data.Repository.IRepository
 {
-    public interface IBrandRepository : IRepository<Brand>
+    public interface IServiceRepository : IRepository<Service>
     {
-        IEnumerable<Brand> Search(string search);
-        void Update(Brand brand);
+        Task UpdateAsync(Service service);
     }
 }

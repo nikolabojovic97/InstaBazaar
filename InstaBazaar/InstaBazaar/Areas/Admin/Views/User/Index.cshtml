@@ -1,4 +1,4 @@
-﻿@model InstaBazaar.Models.ViewModels.ViewModel<Brand>
+﻿@model InstaBazaar.Models.ViewModels.ViewModel<User>
 
 @{
     ViewData["Title"] = Model.Title;
@@ -9,11 +9,12 @@
 
 <div class="row" style="margin-bottom:10px">
     <div class="col-6">
-
+        
     </div>
+
     <div class="col-6">
         <form class="row">
-            <input class="form-control col-6" asp-action="Index" asp-for="Search" value="" name="search" placeholder="Pretraži brendove" />
+            <input class="form-control col-6" asp-action="Index" asp-for="Search" value="" name="search" placeholder="Pretraži korisnike" />
             <input class="btn btn-success" style="margin: 0px 15px 0px 10px" type="submit" value="Traži" />
         </form>
     </div>
@@ -22,52 +23,36 @@
 @if (!string.IsNullOrEmpty(Model.Search))
 {
     <div class="row">
-        <a asp-action="Index" asp-route-search="" class="nav-link bg-dark text-light rounded-pill" style="margin:auto; margin-bottom:10px">@Model.Search &nbsp;<i class="far fa-times-circle"></i></a>
+        <a asp-action="Index" asp-route-search="" class="badge badge-pill badge-info" style="font-size: 16px; margin:auto; margin-bottom:10px">@Model.Search &nbsp;<i class="far fa-times-circle"></i></a>
     </div>
 }
-
 
 <table class="table">
     <thead>
         <tr>
-            <th>
-                Id
-            </th>
-            <th>
-                Naziv
-            </th>
-            <th>
-                Opis
-            </th>
-            <th class="row-cols-2"></th>
+            <th>Username</th>
+            <th>Email</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-        @if (Model.List != null && Model.PagingInfoViewModel.TotalItems > 0)
+        @if (Model.List != null && Model.List.Count > 0)
         {
             foreach (var item in Model.List)
             {
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
+                    <td>@item.UserName</td>
+                    <td>@item.Email</td>
                     <td align="right">
-                        <div class="row-cols-2">
+                        <div class="row-cols-3">
                             <a asp-action="Details" asp-route-Id="@item.Id" class="btn bg-primary text-light">Detalji</a>
                             <a asp-action="Delete" asp-route-Id="@item.Id" class="btn bg-danger text-light">Izbriši</a>
                         </div>
 
-                        @{
-                            /*@Html.ActionLink("Edit", "Edit", new { id = item.Id })
-                            @Html.ActionLink("Details", "Details", new { id = item.Id })
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })*/
-                        }
+
+                        @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
                     </td>
                 </tr>
             }
@@ -88,7 +73,7 @@
         {
             <tr>
                 <td colspan="4">
-                    <h4 class="text-center">Nema brendova</h4>
+                    <h4 class="text-center">Nema korisnika</h4>
                 </td>
             </tr>
         }

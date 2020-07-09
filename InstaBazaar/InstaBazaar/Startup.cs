@@ -46,9 +46,11 @@ namespace InstaBazaar
                 .AddDefaultTokenProviders();
 
 
-            services.AddScoped<IBrandRepository, BrandRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IInstagramAccountRepository, InstagramAccountRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IServiceRepository, ServiceRepository>();
+            services.AddScoped<IServiceTypeRepository, ServiceTypeRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddSingleton<IEmailSender, EmailSender>();

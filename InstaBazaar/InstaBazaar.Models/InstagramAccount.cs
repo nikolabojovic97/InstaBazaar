@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Net;
 using System.Text;
 
 namespace InstaBazaar.Models
@@ -16,9 +18,12 @@ namespace InstaBazaar.Models
         public double AvgComments { get; set; }
         public double AvgLikes { get; set; }
 
+        public List<Service> Services { get; set; }
+
         public string UserId { get; set; }
         public User User { get; set; }
-        public long CategoryId { get; set; }
+        public int CategoryId { get; set; }
         public Category Category { get; set; }
+
     }
 }

@@ -13,7 +13,7 @@
     </div>
     <div class="col-6">
         <form class="row">
-            <input class="form-control col-6" asp-action="Index" asp-for="Search" value="" name="search" placeholder="Pretraži brendove" />
+            <input class="form-control col-6" asp-action="Index" asp-for="Search" value="" name="search" placeholder="Pretraži profile" />
             <input class="btn btn-success" style="margin: 0px 15px 0px 10px" type="submit" value="Traži" />
         </form>
     </div>
@@ -22,7 +22,7 @@
 @if (!string.IsNullOrEmpty(Model.Search))
 {
     <div class="row">
-        <a asp-action="Index" asp-route-search="" class="nav-link bg-dark text-light rounded-pill" style="margin:auto; margin-bottom:10px">@Model.Search &nbsp;<i class="far fa-times-circle"></i></a>
+        <a asp-action="Index" asp-route-search="" class="badge badge-pill badge-info" style="font-size: 16px; margin:auto; margin-bottom:10px">@Model.Search &nbsp;<i class="far fa-times-circle"></i></a>
     </div>
 }
 

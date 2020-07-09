@@ -1,0 +1,54 @@
+﻿@model InstaBazaar.Models.User
+@{
+    ViewData["Title"] = "Brisanje";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Brisanje</h1>
+
+<h3>Da li ste sigurni da želite da izbrišete korisnika?</h3>
+<div>
+    <h4>Korisnik</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Id
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Id
+        </dd>
+        <dt class="col-sm-2">
+            Korisničko ime
+        </dt>
+        <dd class="col-sm-10">
+            @Model.UserName
+        </dd>
+        <dt class="col-sm-2">
+            Email
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Email
+        </dd>
+    </dl>
+    @if (Model.InstagramAccounts != null && Model.InstagramAccounts.Count > 0)
+    {
+        <div class="row" style="margin:auto">
+            @foreach (var item in Model.InstagramAccounts)
+            {
+            <a class="btn bg-primary text-light" asp-controller="InstagramAccount" asp-action="Details" asp-route-id="@item.Id">@("@")@item.IgUserName</a>
+            }
+        </div>
+
+        <br />
+    }
+
+    <form asp-action="DeleteUser" asp-route-id="@Model.Id" method="post">
+        <input type="submit" value="Izbriši" class="btn btn-danger" />
+    </form>
+</div>
+
+<br />
+
+<div>
+    <a asp-action="Index">Nazad na sve korisnike</a>
+</div>

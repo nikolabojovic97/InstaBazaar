@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace InstaBazaar.Data.Data.Repository
 {
@@ -20,56 +21,64 @@ namespace InstaBazaar.Data.Data.Repository
             this.dbSet = context.Set<T>();
         }
 
-        public void Add(T entity)
+        public async Task AddAsync(T entity)
         {
-            dbSet.Add(entity);
+            await dbSet.AddAsync(entity);
         }
 
-        public T Get(int id)
+        public async Task<T> GetAsync(int id)
         {
-            return dbSet.Find(id);
+            return await dbSet.FindAsync(id);
         }
 
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null)
+        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null)
         {
-            IQueryable<T> query = dbSet;
+            return await Task.Run(() =>
+            {
+                IQueryable<T> query = dbSet;
+                if (filter != null)
+                    query = query.Where(filter);
 
-            if (filter != null)
-                query = query.Where(filter);
+                if (includeProperties != null)
+                    foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                        query = query.Include(includeProperty);
 
-            if (includeProperties != null)
-                foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-                    query = query.Include(includeProperty);
+                if (orderBy != null)
+                    return orderBy(query).ToList();
 
-            if (orderBy != null)
-                return orderBy(query).ToList();
-
-            return query.ToList();
+                return query.ToList();
+            });
         }
 
-        public T GetFirstOrDefault(Expression<Func<T, bool>> filter = null, string includeProperties = null)
+        public async Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> filter = null, string includeProperties = null)
         {
-            IQueryable<T> query = dbSet;
+            return await Task.Run(() =>
+            {
+                IQueryable<T> query = dbSet;
 
-            if (filter != null)
-                query = query.Where(filter);
+                if (filter != null)
+                    query = query.Where(filter);
 
-            if (includeProperties != null)
-                foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-                    query = query.Include(includeProperty);
+                if (includeProperties != null)
+                    foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                        query = query.Include(includeProperty);
 
-            return query.FirstOrDefault();
+                return query.FirstOrDefault();
+            });
         }
 
-        public virtual void Remove(int id)
+        public virtual async Task RemoveAsync(int id)
         {
-            T entity = dbSet.Find(id);
-            Remove(entity);
+            T entity = await dbSet.FindAsync(id);
+            await RemoveAsync(entity);
         }
 
-        public virtual void Remove(T entity)
+        public virtual async Task RemoveAsync(T entity)
         {
-            dbSet.Remove(entity);
+            await Task.Run(() =>
+            {
+                dbSet.Remove(entity);
+            });
         }
     }
 }

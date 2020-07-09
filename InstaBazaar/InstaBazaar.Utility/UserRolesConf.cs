@@ -7,8 +7,7 @@ namespace InstaBazaar.Utility
     public class UserRolesConf
     {
         public const string Admin = "Admin";
-        public const string Brand = "Brand";
-        public const string Influencer = "Influencer";
+        public const string User = "User";
 
     }
 }

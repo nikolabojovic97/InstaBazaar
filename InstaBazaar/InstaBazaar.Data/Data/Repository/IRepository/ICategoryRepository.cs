@@ -11,8 +11,9 @@ namespace InstaBazaar.Data.Data.Repository.IRepository
     public interface ICategoryRepository : IRepository<Category>
     {
         IEnumerable<SelectListItem> GetCategoryListForDropDown();
-        IEnumerable<Category> Search(string search);
-        void Update(Category category);
+        Task<IEnumerable<Category>> SearchAsync(string search);
+        Task UpdateAsync(Category category);
         Task<string> SaveImageAsync(IFormFile file, string oldImagePath = null);
+        IEnumerable<Category> Search(IEnumerable<Category> categories, string search);
     }
 }

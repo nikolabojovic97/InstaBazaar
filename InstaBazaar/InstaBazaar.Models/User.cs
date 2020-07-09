@@ -7,7 +7,7 @@ namespace InstaBazaar.Models
 {
     public class User : IdentityUser
     {
+        public IdentityRole Role { get; set; }
         public List<InstagramAccount> InstagramAccounts { get; set; }
-        public List<Brand> Brands { get; set; }
     }
 }

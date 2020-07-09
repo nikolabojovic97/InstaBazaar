@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - InstaBazaar</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap1.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
@@ -29,9 +29,9 @@
                         <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Upravljanje sadržajem
                         </a>
-                        <div class="dropdown-menu bg-primary" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item text-light" asp-area="Admin" asp-controller="Brand" asp-action="Index">Brendovi</a>
-                            <a class="dropdown-item text-light" asp-area="Admin" asp-controller="Influencer" asp-action="Index">Influenseri</a>
+                        <div class="dropdown-menu dropdown-toggle bg-primary" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item text-light" asp-area="Admin" asp-controller="User" asp-action="Index">Korisnici</a>
+                            <a class="dropdown-item text-light" asp-area="Admin" asp-controller="InstagramAccount" asp-action="Index">Influenseri</a>
                             <a class="dropdown-item text-light" asp-area="Admin" asp-controller="Category" asp-action="Index">Kategorije</a>
                             <a class="dropdown-item text-light" asp-area="Admin" asp-controller="Statistics" asp-action="Index">Statistika</a>
                         </div>

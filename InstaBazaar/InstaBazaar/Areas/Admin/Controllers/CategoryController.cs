@@ -31,19 +31,17 @@ namespace InstaBazaar.Areas.Admin.Controllers
         }
 
         // GET: CategoryController
-        public ActionResult Index(int page = 1, string search = null)
+        public async Task<ActionResult> Index(int page = 1, string search = null)
         {
             ViewModel<Category> vm = new ViewModel<Category>();
 
-            IEnumerable<Category> categories;
+            var categories = await unitOfWork.Category.GetAllAsync();
 
             if (!string.IsNullOrEmpty(search))
             {
                 vm.Search = search;
-                categories = unitOfWork.Category.Search(search);
+                categories = unitOfWork.Category.Search(categories, search);
             }
-            else
-                categories = unitOfWork.Category.GetAll();
 
             vm.Title = "Kategorije";
             vm.SubTitle = "Sve registrovane kategorije";
@@ -54,9 +52,9 @@ namespace InstaBazaar.Areas.Admin.Controllers
         }
 
         // GET: CategoryController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            var category = unitOfWork.Category.Get(id);
+            var category = await unitOfWork.Category.GetAsync(id);
             if (category == null)
                 return new NotFoundResult();
 
@@ -72,7 +70,7 @@ namespace InstaBazaar.Areas.Admin.Controllers
         // POST: CategoryController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(include: "Name, Description")]Category category)
+        public async Task<ActionResult> Create([Bind(include: "Name, Description")]Category category)
         {
             try
             {
@@ -85,12 +83,12 @@ namespace InstaBazaar.Areas.Admin.Controllers
                     var extension = Path.GetExtension(file.FileName);
 
                     var fileStream = new FileStream(Path.Combine(uploadPath, fileName + extension), FileMode.Create);
-                    file.CopyToAsync(fileStream);
+                    await file.CopyToAsync(fileStream);
 
                     category.ImageUrl = @"\images\categories\" + fileName + extension;
 
-                    unitOfWork.Category.Add(category);
-                    unitOfWork.Save();
+                    await unitOfWork.Category.AddAsync(category);
+                    await unitOfWork.SaveAsync();
                     return RedirectToAction(nameof(Index));
                 }
             }
@@ -103,9 +101,9 @@ namespace InstaBazaar.Areas.Admin.Controllers
         }
 
         // GET: CategoryController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            var category = unitOfWork.Category.Get(id);
+            var category = await unitOfWork.Category.GetAsync(id);
             if (category == null)
                 return new NotFoundResult();
 
@@ -121,7 +119,7 @@ namespace InstaBazaar.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var categoryDb = unitOfWork.Category.Get(id);
+                    var categoryDb = await unitOfWork.Category.GetAsync(id);
                     if (categoryDb == null)
                         return new NotFoundResult();
 
@@ -130,8 +128,8 @@ namespace InstaBazaar.Areas.Admin.Controllers
                         category.ImageUrl = await unitOfWork.Category.SaveImageAsync(files.First(), categoryDb.ImageUrl);
                    
 
-                    unitOfWork.Category.Update(category);
-                    unitOfWork.Save();
+                    await unitOfWork.Category.UpdateAsync(category);
+                    await unitOfWork.SaveAsync();
                     return RedirectToAction(nameof(Index));
                 }
             }
@@ -144,9 +142,9 @@ namespace InstaBazaar.Areas.Admin.Controllers
         }
 
         // GET: CategoryController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            var category = unitOfWork.Category.Get(id);
+            var category = await unitOfWork.Category.GetAsync(id);
             if (category == null)
                 return new NotFoundResult();
 
@@ -156,16 +154,16 @@ namespace InstaBazaar.Areas.Admin.Controllers
         // POST: CategoryController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteCategory(int id)
+        public async Task<ActionResult> DeleteCategory(int id)
         {
             try
             {
-                var category = unitOfWork.Category.Get(id);
+                var category = await unitOfWork.Category.GetAsync(id);
                 if (category == null)
                     return new NotFoundResult();
 
-                unitOfWork.Category.Remove(category);
-                unitOfWork.Save();
+                await unitOfWork.Category.RemoveAsync(category);
+                await unitOfWork.SaveAsync();
             }
             catch (DataException /* dex */)
             {
